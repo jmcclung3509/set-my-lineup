@@ -1,75 +1,22 @@
-# Nuxt 3 Minimal Starter
+NOTES:
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Basic flow
+** User uploads their current roster of players
+** should have a dropdown for player position and a textbox or dropdown for player name
+** start with 16 positions with the option to add more
+** Set the type of league (PPR, etc)
+** Small text box at bottom
+**  Send it to your expert
+**Expert will have to be notified via email or text
+** Expert sets line up  positions will be fixed, expert can pick player for that position based on users available players
+** Anything user wrote in text box will show up in bottom
+** Expert can respond with own text box
+**Expert submits lineup
+** User is notified 
 
-## Setup
 
-Make sure to install the dependencies:
 
-```bash
-# npm
-npm install
 
-# pnpm
-pnpm install
 
-# yarn
-yarn install
 
-# bun
-bun install
-```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
