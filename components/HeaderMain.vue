@@ -7,9 +7,11 @@
           v-model="selected"
           @click="handleToggle"
         />
-        <UDropdown :items="items" :ui="{ item: { disabled: 'cursor-text select-text' } }" :popper="{ placement: 'bottom-start' }"  >
-      <UAvatar :src="url" />
-  
+        <UDropdown :items="items" :ui="{ item: { disabled: 'cursor-text select-text' } }" :popper="{ placement: 'bottom-start' }"  > 
+            <UAvatar
+    src="https://avatars.githubusercontent.com/u/739984?v=4"
+    alt="Avatar"
+  />
       <template #account="{ item}">
         <div class="text-left">
           <p>
@@ -45,24 +47,24 @@
   
   
   
-//   const items = [
-//     [{
-//       label: user.value?.email,
-//       slot: 'account',
-//       disabled: true
-//     }], [{
-//       label: 'Settings',
-//       icon: 'i-heroicons-cog-8-tooth',
-//       onClick: ()=> navigateTo('/settings')
-//     }, {
-//       label: 'Sign out',
-//       icon: 'i-heroicons-arrow-left-on-rectangle',
-//       onClick: async ()=>{
-//         await supabase.auth.signOut();
-//         return navigateTo('/login');
-//       }
-//     }]
-//   ]
+  const items = [
+    [{
+      label: user.value?.email,
+      slot: 'account',
+      disabled: true
+    }], [{
+      label: 'Settings',
+      icon: 'i-heroicons-cog-8-tooth',
+      onClick: ()=> navigateTo('/settings')
+    }, {
+      label: 'Sign out',
+      icon: 'i-heroicons-arrow-left-on-rectangle',
+      onClick: async ()=>{
+        await supabase.auth.signOut();
+        return navigateTo('/auth/login');
+      }
+    }]
+  ]
   
   const handleToggle = () => {
    selected.value = !selected.value;
