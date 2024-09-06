@@ -1,4 +1,4 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -20,6 +20,11 @@ export default defineNuxtConfig({
     public: {
       baseUrl: process.env.BASE_URL || "http://localhost:3000",
     },
+    private:{
+      EMAIL_PSWRD: 'suyy gdag hxht uaur',
+      EMAIL_USER: process.env.EMAIL_USER,
+    }
+
   },
   supabase: {
     redirect: false,
@@ -38,15 +43,6 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "nuxt-nodemailer",
   ],
-  nodemailer: {
-    from: '"Fantasy Wingman" <jturner3509@gmail.com>',
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PSWRD,
-    },
-  },
+
   compatibilityDate: "2024-08-09",
 });

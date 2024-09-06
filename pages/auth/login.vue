@@ -1,6 +1,6 @@
 <template>
   <UCard v-if="!success && !showForgotPasswordForm">
-    <template #header> Sign in to fantasy wingman </template>
+    <template #header> Login to fantasy wingman </template>
     <form @submit.prevent="signInWithEmail">
       <UFormGroup
         label="email"

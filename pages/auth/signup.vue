@@ -25,14 +25,17 @@
     </UFormGroup>
     <UButton
       type="submit"
-      :disabled="pending"
+      :disabled="pending || !selected"
       color="green"
       variant="solid"
       label="Sign up"
       :loading="pending"
+      class="mb-4"
     >
       SIGN UP
     </UButton>
+    <UCheckbox v-model="selected" name="opt-in" label="I agree to receive emails from Fantasy Wingman" />
+
   </form>
 </template>
 
@@ -42,10 +45,12 @@ const supabase = useSupabaseClient();
 const pending = ref(false);
 const email = ref("");
 const password = ref("");
+const selected = ref(true)
 
 const redirectUrl = useRuntimeConfig().public.baseUrl;
 
-
+ useRedirectIfAuthenticated()
+ 
 const signUpNewUser = async () => {
   pending.value = true;
   try {

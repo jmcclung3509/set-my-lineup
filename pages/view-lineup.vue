@@ -1,18 +1,25 @@
 <template>
-    Here is the lineup
-
+   
+  <h2> Your Lineup</h2>
     <InputForm :players="lineups" :pprFormat="pprFormat" />
 </template>
 
+
 <script setup>
 
-const supabase = useSupabaseClient();
-const route = useRoute();
+const route  = useRoute()
 const lineupId = route.query.lineupId;
+console.log(lineupId)
+const { lineups, pprFormat, isPending, error, fetchLineup} = useFetchLineup(lineupId);
+console.log(lineups, 'lineups')
 
-const {fetchLineup, lineups} = useFetchLineup(lineupId);
-
-onMounted(fetchLineup);
 
 
+
+onMounted(()=>{
+const results = fetchLineup()
+console.log(results)
+
+
+})
 </script>
