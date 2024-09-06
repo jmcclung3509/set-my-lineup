@@ -68,15 +68,29 @@ const getUserId = async ()=>{
     return user.id;
 }
 
+const deconstructLabel = (item) => {
+  const label = item.label || item;
+  console.log(label)
+
+  const dashIndex = label.indexOf("-");
+  const teamIndex = label.indexOf("(");
+
+  const name = label.slice(0, dashIndex).trim();
+  const position = label.slice(dashIndex + 1, teamIndex).trim();
+  const team = label.slice(teamIndex + 1, -1).trim();
+
+  return { name, position, team };
+};
+
+
 const saveLineup = async () => {
     isLoading.value = true;
-  
 
   const emptyFields = players.value
     .map((player, index) => ({ player, index: index + 1 }))
     .filter(({ player }) => !player.position || !player.playerName);
 
-  if (emptyFields.length > 5) {
+  if (emptyFields.length > 0) {
     const emptyFieldsList = emptyFields
       .map(({ index }) => `Player ${index}`)
       .join(", ");
@@ -86,22 +100,21 @@ const saveLineup = async () => {
     return;
   }
 
-  isLoading.value = true;
   try {
     const userId = await getUserId();
     if(!userId){
         console.error("No user ID found");
         return;
     }
+console.log(players.value)
     const lineupData = players.value.reduce((acc, player, index) => {
-      const playerName =
-        typeof player.playerName === "object"
-          ? player.playerName.label || JSON.stringify(player.playerName)
-          : player.playerName;
-      acc[`position_${index + 1}`] = player.position;
-      acc[`player_${index + 1}`] = playerName;
+      const { name, position} = deconstructLabel(player.playerName);
+      acc[`player_${index + 1}`] = name;
+      acc[`fantasyPosition_${index + 1}`] = player.position; // fantasyPosition
+      acc[`playerPosition_${index + 1}`] = position; // extracted player position from label
       return acc;
     }, {});
+
 
     lineupData.type = pprFormat.value;
     lineupData.user_id = userId;
@@ -116,12 +129,11 @@ const saveLineup = async () => {
       .single();
 
     if (insertError) {
-      console.error("Supabase error:", error);
-      throw error;
+      console.error("Supabase error:", insertError);
+      throw insertError;
     }
 
     console.log("Supabase response:", data);
-
 
     const lineupId = data.lineup_id;
     console.log("Lineup ID:", lineupId);
@@ -144,13 +156,10 @@ const sendLineup = async () => {
   console.log("sending");
   isLoading.value = true;
 
-
   const recipientEmail = "criticalhits8@gmail.com";
 
 
   const loginUrl = `${baseUrl}/auth/login?redirectTo=/view-lineup`
-//   const loginUrl = `${baseUrl}/auth/login?redirectTo=/view-lineup&userId=${userId}&lineupId=${lineupId}`;
-
 
   try {
    const response =  await axios.post("/api/send-email", {

@@ -29,7 +29,7 @@ import { z } from "zod";
 const props = defineProps({
   label: String,
   position: String,
-  playerName: [String, Object]
+  playerName: [String, Object],
 });
 
 const emit = defineEmits(["update:position", "update:playerName"]);
@@ -53,8 +53,6 @@ const state = ref({
   playerName: props.playerName || {},
 });
 
-
-
 const schema = z.object({
   position: z.string(),
   playerName: z.string() || z.object({ label: z.string(), value: z.string() }),
@@ -68,8 +66,11 @@ const updatePosition = async (value) => {
 };
 
 const updatePlayerName = (value) => {
+  console.log(value)
   state.value.playerName = value;
+  state.value.playerPosition = value 
   emit("update:playerName", value);
+
 };
 
 const fetchPlayers = async (position) => {
@@ -102,31 +103,32 @@ const fetchPlayers = async (position) => {
       LastName: "Defense",
       Team: team.Key,
       PlayerID: team.TeamID,
+      Position: "DEF",
     }));
     const allPlayers = playerData
-      .filter((player) => player.Team !== null).slice(0, 500)
+      .filter((player) => player.Team !== null)
+      .slice(0, 500)
       .concat(defenses);
-
-  
 
     if (position === "DEF") {
       filteredPlayers.value = defenses;
-    } else if (position !== "Bench") {
+    }  else if(position === "RB"){
+      filteredPlayers.value = allPlayers.filter(
+        (player) => player.Position === "RB" || player.Position === "FB"
+      );
+    } else if (position === "Bench") {
+      filteredPlayers.value = allPlayers;
+    }else if(position !== "Bench") {
       filteredPlayers.value = allPlayers.filter(
         (player) => player.Position === position
       );
-    } else if (position === "Bench") {
-      
-      filteredPlayers.value = allPlayers;
     }
     filteredPlayers.value = filteredPlayers.value.sort((a, b) =>
       a.FirstName.localeCompare(b.FirstName)
     );
 
-
-
     return filteredPlayers.value.map((player) => ({
-      label: `${player.FirstName} ${player.LastName} (${player.Team})`,
+      label: `${player.FirstName} ${player.LastName} - ${player.Position} (${player.Team})`,
       value: player.PlayerID,
     }));
   } catch (error) {
@@ -151,20 +153,17 @@ watch(
   (newValue) => {
     if (newValue !== state.value.playerName) {
       state.value.playerName = newValue;
-   
     }
   }
 );
 
-onMounted(async()=>{
-
-    if(props.position){
-      
-        state.value.position = props.position;
-        playerOptions.value = await fetchPlayers(props.position);
-    }
-    if(props.playerName){
-        state.value.playerName = props.playerName;
-    }
-})
+onMounted(async () => {
+  if (props.position) {
+    state.value.position = props.position;
+    playerOptions.value = await fetchPlayers(props.position);
+  }
+  if (props.playerName) {
+    state.value.playerName = props.playerName;
+  }
+});
 </script>
