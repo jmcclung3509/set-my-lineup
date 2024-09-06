@@ -1,6 +1,6 @@
 <template>
     <header class="flex justify-between items-center">
-      <nuxt-link to="/" class="text-2xl font-bold">Set My Lineup</nuxt-link>
+      <nuxt-link to="/" class="text-2xl font-bold">Fantasy Wingman</nuxt-link>
       <div class="flex justify-end gap-4 items-center">
         <UToggle
           class="bg-gray-200 dark:bg-gray-500"

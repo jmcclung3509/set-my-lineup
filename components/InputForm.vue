@@ -15,7 +15,7 @@
       v-for="(player, index) in players"
       :key="index"
       :label="`Player ${index + 1}`"
-      v-model:position="player.position"
+      v-model:fantasyPosition="player.fantasyPosition"
       v-model:playerName="player.playerName"
     />
   </div>
@@ -44,7 +44,6 @@ const supabase = useSupabaseClient();
 const isLoading = ref(false);
 const pprFormat = ref(props.pprFormat || "Standard");
 const pprOptions = ["Standard", "Half-point", "Full-point"];
-// const players = ref([...props.players]);
 const players = ref(props.players.map(player => ({ ...player })));
 
 
@@ -70,7 +69,6 @@ const getUserId = async ()=>{
 
 const saveLineup = async () => {
     isLoading.value = true;
-  
 
   const emptyFields = players.value
     .map((player, index) => ({ player, index: index + 1 }))
