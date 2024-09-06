@@ -70,19 +70,19 @@ const getUserId = async ()=>{
 const saveLineup = async () => {
     isLoading.value = true;
 
-  const emptyFields = players.value
-    .map((player, index) => ({ player, index: index + 1 }))
-    .filter(({ player }) => !player.position || !player.playerName);
+  // const emptyFields = players.value
+  //   .map((player, index) => ({ player, index: index + 1 }))
+  //   .filter(({ player }) => !player.position || !player.playerName);
 
-  if (emptyFields.length > 5) {
-    const emptyFieldsList = emptyFields
-      .map(({ index }) => `Player ${index}`)
-      .join(", ");
-    alert(
-      `Please fill in all player positions and names. Empty fields: ${emptyFieldsList}`
-    );
-    return;
-  }
+  // if (emptyFields.length > 5) {
+  //   const emptyFieldsList = emptyFields
+  //     .map(({ index }) => `Player ${index}`)
+  //     .join(", ");
+  //   alert(
+  //     `Please fill in all player positions and names. Empty fields: ${emptyFieldsList}`
+  //   );
+  //   return;
+  // }
 
   isLoading.value = true;
   try {
@@ -139,7 +139,7 @@ const sendLineup = async () => {
         console.error("No lineup ID found");
         return;
     }
-  console.log("sending");
+  console.log("sending", lineupId, "lineupId");
   isLoading.value = true;
 
 

@@ -215,36 +215,25 @@ const fetchPlayers = async () => {
 
 const filterPlayersByFantasyPosition = (position) => {
   console.log(position, "position");
+  
   if (!allPlayers.value.length) return []; // Return empty if no players
-
+  
   let filteredPlayers = allPlayers.value;
-  console.log(filteredPlayers, "filteredPlayers");
-
-  if ( position !== "Bench") {
-    filteredPlayers = allPlayers.value.filter(
-      (player) => {
-        console.log(player.playerPosition)
-
-        return player.playerPosition === position
-      }
-    );
-  }
-  if (position === "DEF") {
-    filteredPlayers = allPlayers.value.filter((player) => {
-      return player.playerPosition === "DEF";
-    });
+  
+  if (position && position !== "Bench") {
+    filteredPlayers = allPlayers.value.filter(player => player.Position === position);
   }
   
+  if (position === "DEF") {
+    filteredPlayers = allPlayers.value.filter(player => player.Position === "DEF");
+  }
 
-return filteredPlayers
-.sort((a, b) => (a.FirstName || "").localeCompare(b.FirstName || ""))
+  return filteredPlayers
+    .sort((a, b) => (a.FirstName || "").localeCompare(b.FirstName || ""))
     .map((player) => ({
       label: `${player.FirstName} ${player.LastName} - ${player.Position} (${player.Team})`,
       value: player.PlayerID,
     }));
-
-
-
 };
 
 watch(
