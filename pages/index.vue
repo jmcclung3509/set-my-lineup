@@ -6,7 +6,7 @@
     >
     <section  class="form">
         <InputForm :players="lineups" :pprFormat="pprFormat"   
-/> {{ lineups }}
+/> 
     </section>
 
   </div>
